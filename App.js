@@ -1,77 +1,124 @@
-import React, { useState } from 'react';
-import { View, Text, Alert, Button, StyleSheet, TextInput, Switch } from 'react-native';
-import Encabezado from './Encabezado';
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import FormsScreen from './screens/FormScreens';
+import { NavigationContainer } from '@react-navigation/native';
+import Detalle from './screens/Detalle';
+import Dulceria from './screens/Dulceria';
+import { GluestackUIProvider } from './components/ui/gluestack-ui-provider';
+import "@/global.css";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; 
+import Personalizar from './screens/Personalizar';
+import Comentarios from './screens/Comentarios';
+import Example from './screens/Example';
+import Perfil from './screens/Perfil';
+import Bebidas from './screens/Bebidas';
 
-import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
-import '@/global.css';
+const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
-function Login() {
-  console.log('Inicializando app')
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
-  const [usuario, setUsuario] = useState('');
-  const [password, setPassword] = useState('');
-  const [autenticado, setAutenticado] = useState(false);
-
-  const handleLogin = () => {
-    console.log('Componente alert activado al iniciar sesión')
-    Alert.alert('Autenticación', 'Usuario autenticado');
-    setAutenticado(true);
-  };
-  const handleExit = () => {
-    console.log('Componente alert activado al cerrar sesión')
-    Alert.alert('Autenticación', 'Se cerro la sesión');
-    setAutenticado(false);
-  };
+function PeliculasStack({ navigation }) {
   return (
-    
-    <GluestackUIProvider>
-      <View style={styles.container}>
-      
-      <Encabezado nombre='José Diego Arias Reyes' color='red'></Encabezado>
-
-      <TextInput style={styles.input} placeholder="Usuario" value={usuario} onChangeText={setUsuario}/>
-      <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry/>
-
-      <View style={styles.btn}>
-      <Button title='Sign in' onPress={handleLogin} disabled={autenticado ? true : false} />
-      </View>
-      <View style={styles.btn}>
-      <Button title='Exit' onPress={handleExit} disabled={autenticado ? false : true} />
-      </View>
-    </View>
-    </GluestackUIProvider>
-  
+    <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: "#00235D" } }}>
+      <Stack.Screen
+        name="PelículasHome"
+        component={FormsScreen}
+        options={{
+          headerTitle: 'Películas',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 10, marginRight: 10 }}>
+              <Ionicons name="menu" size={28} color="#fff" />
+            </TouchableOpacity>
+          ),
+          headerTintColor: "white"
+        }}
+      />
+      <Stack.Screen
+        name="Detalle"
+        component={Detalle}
+        options={{ headerTitle: '', headerShown: true, headerTintColor: 'white' }}
+      />
+      <Stack.Screen
+        name="Personalizar"
+        component={Personalizar}
+        options={{ headerTitle: 'Personalizar', headerShown: true, headerTintColor: 'white' }}
+      />
+    </Stack.Navigator>
   );
+}
 
-};
+function DulceriaStack({ navigation }) {
+  return (
+    <Stack.Navigator screenOptions={{ headerStyle: { backgroundColor: "#00235D" } }}>
+      <Stack.Screen
+        name="DulceriaHome"
+        component={Dulceria}
+        options={{
+          headerTitle: 'Dulceria',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.openDrawer()} style={{ marginLeft: 10, marginRight: 10 }}>
+              <Ionicons name="menu" size={28} color="#fff" />
+            </TouchableOpacity>
+          ),
+          headerTintColor: "white"
+        }}
+      />
+      <Stack.Screen
+        name="Personalizar"
+        component={Personalizar}
+        options={{ headerTitle: 'Personalizar', headerShown: true, headerTintColor: 'white' }}
+      />
+    </Stack.Navigator>
+  );
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-  bold:{
-    fontWeight:'700',
-    color:'white'
-  },
-  normal:{
-    fontWeight:'400'
-  },
-  input: {
-    width: '90%',
-    marginTop: 20,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 10
-  },
-  btn:{
-    marginTop: 40
-  }
-});
+function App() {
+  return (
+    <GluestackUIProvider>
+      <NavigationContainer>
+        <Drawer.Navigator
+          screenOptions={{
+            headerTitle: 'Dulcería',
+            headerStyle: { backgroundColor: '#00235D' },
+            headerTintColor: 'white',
+            drawerStyle: { backgroundColor: '#00235D' },
+            drawerActiveBackgroundColor: '#001536ff',
+            drawerActiveTintColor: 'white',
+            drawerInactiveBackgroundColor: '#00235D',
+            drawerInactiveTintColor: 'white'
+          }}
+        >
+          <Drawer.Screen
+            name="Películas"
+            component={PeliculasStack}
+            options={{ headerShown: false }}
+          />
+          <Drawer.Screen
+            name="Dulcería"
+            component={DulceriaStack}
+            options={{ headerShown: false }}
+          />
+          <Drawer.Screen
+            name="Comentarios"
+            component={Comentarios}
+            options={{ headerShown: true, headerTitle:'Comentarios' }}
+          />
+          <Drawer.Screen
+            name="Perfil"
+            component={Perfil}
+            options={{ headerShown: true, headerTitle:'Perfil' }}
+          />
+          <Drawer.Screen
+            name="Bebidas"
+            component={Bebidas}
+            options={{ headerShown: true, headerTitle:'Bebidas' }}
+          />
 
-export default  Login;
+
+        </Drawer.Navigator>
+      </NavigationContainer>
+    </GluestackUIProvider>
+  );
+}
+
+export default App;

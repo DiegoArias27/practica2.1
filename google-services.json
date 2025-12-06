@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "514546451124",
+    "project_id": "skinet-d270c",
+    "storage_bucket": "skinet-d270c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514546451124:android:1ccda7c49f3a8bdc044de1",
+        "android_client_info": {
+          "package_name": "com.company.skinet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApLKsIaWf4QCfiluMn41M8Chles8LlKSk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

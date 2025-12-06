@@ -13,6 +13,9 @@ import Comentarios from './screens/Comentarios';
 import Example from './screens/Example';
 import Perfil from './screens/Perfil';
 import Bebidas from './screens/Bebidas';
+import Registro from './screens/Registro';
+import Modificar from './screens/Modificar';
+
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -113,7 +116,16 @@ function App() {
             component={Bebidas}
             options={{ headerShown: true, headerTitle:'Bebidas' }}
           />
-
+          <Drawer.Screen
+            name="Registro"
+            component={Registro}
+            options={{ headerShown: true, headerTitle:'Registro' }}
+          />
+          <Drawer.Screen
+            name="Modificar"
+            component={Modificar}
+            options={{ headerShown: true, headerTitle:'Modificar' }}
+          />
 
         </Drawer.Navigator>
       </NavigationContainer>
